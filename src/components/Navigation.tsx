@@ -1,7 +1,8 @@
-import { Search, LogIn, UserPlus, LogOut, User } from "lucide-react";
+import { Search, LogIn, UserPlus, LogOut, User, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link, useLocation } from "react-router-dom";
+import { useTheme } from "@/components/theme-provider";
 
 interface NavigationProps {
   isAuthenticated?: boolean;
@@ -10,6 +11,7 @@ interface NavigationProps {
 
 const Navigation = ({ isAuthenticated = false, isDashboard = false }: NavigationProps) => {
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -58,6 +60,19 @@ const Navigation = ({ isAuthenticated = false, isDashboard = false }: Navigation
               />
             </div>
           )}
+
+          {/* Theme Toggle */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+          >
+            {theme === "light" ? (
+              <Moon className="h-4 w-4" />
+            ) : (
+              <Sun className="h-4 w-4" />
+            )}
+          </Button>
 
           {isAuthenticated ? (
             <div className="flex items-center space-x-2">

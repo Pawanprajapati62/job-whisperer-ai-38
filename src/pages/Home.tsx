@@ -4,11 +4,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Navigation from "@/components/Navigation";
 import JobCard from "@/components/JobCard";
 import { Filter, Search } from "lucide-react";
+import { locationData, getCurrencySymbol } from "@/hooks/useLocationData";
 
 const Home = () => {
   const [jobType, setJobType] = useState("");
   const [salaryRange, setSalaryRange] = useState("");
-  const [location, setLocation] = useState("");
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
 
   const jobListings = [
     {
@@ -96,13 +98,17 @@ const Home = () => {
   const handleClearFilters = () => {
     setJobType("");
     setSalaryRange("");
-    setLocation("");
+    setCountry("");
+    setState("");
   };
 
   const handleApplyFilters = () => {
     // Implementation for filtering would go here
-    console.log("Applying filters:", { jobType, salaryRange, location });
+    console.log("Applying filters:", { jobType, salaryRange, country, state });
   };
+
+  const selectedCountryData = country ? locationData.countries[country] : null;
+  const currencySymbol = selectedCountryData ? getCurrencySymbol(selectedCountryData.currency) : "$";
 
   return (
     <div className="min-h-screen bg-background">
@@ -116,11 +122,11 @@ const Home = () => {
           </h1>
           
           {/* Search and Filter Bar */}
-          <div className="max-w-4xl mx-auto bg-card rounded-lg shadow-lg p-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+          <div className="max-w-6xl mx-auto bg-card rounded-lg shadow-lg p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-4">
               <Select value={jobType} onValueChange={setJobType}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Full-time, Part-time..." />
+                  <SelectValue placeholder="Job Type" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="full-time">Full-time</SelectItem>
@@ -132,38 +138,50 @@ const Home = () => {
               
               <Select value={salaryRange} onValueChange={setSalaryRange}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Any salary" />
+                  <SelectValue placeholder="Salary Range" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="40k-60k">$40k - $60k</SelectItem>
-                  <SelectItem value="60k-80k">$60k - $80k</SelectItem>
-                  <SelectItem value="80k-100k">$80k - $100k</SelectItem>
-                  <SelectItem value="100k+">$100k+</SelectItem>
+                  <SelectItem value="40k-60k">{currencySymbol}40k - {currencySymbol}60k</SelectItem>
+                  <SelectItem value="60k-80k">{currencySymbol}60k - {currencySymbol}80k</SelectItem>
+                  <SelectItem value="80k-100k">{currencySymbol}80k - {currencySymbol}100k</SelectItem>
+                  <SelectItem value="100k-150k">{currencySymbol}100k - {currencySymbol}150k</SelectItem>
+                  <SelectItem value="150k+">{currencySymbol}150k+</SelectItem>
                 </SelectContent>
               </Select>
               
-              <Select value={location} onValueChange={setLocation}>
+              <Select value={country} onValueChange={(value) => { setCountry(value); setState(""); }}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select location" />
+                  <SelectValue placeholder="Country" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="remote">Remote</SelectItem>
-                  <SelectItem value="new-york">New York, NY</SelectItem>
-                  <SelectItem value="san-francisco">San Francisco, CA</SelectItem>
-                  <SelectItem value="austin">Austin, TX</SelectItem>
-                  <SelectItem value="seattle">Seattle, WA</SelectItem>
+                  {Object.entries(locationData.countries).map(([key, countryData]) => (
+                    <SelectItem key={key} value={key}>
+                      {countryData.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={state} onValueChange={setState} disabled={!country || !selectedCountryData?.states}>
+                <SelectTrigger>
+                  <SelectValue placeholder={country ? "State/Region" : "Select country first"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {selectedCountryData?.states?.map((stateName) => (
+                    <SelectItem key={stateName} value={stateName}>
+                      {stateName}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               
-              <div className="flex gap-2">
-                <Button variant="outline" onClick={handleClearFilters} className="flex-1">
-                  Clear Filters
-                </Button>
-                <Button onClick={handleApplyFilters} className="flex-1 btn-glow">
-                  <Filter className="h-4 w-4 mr-2" />
-                  Apply Filters
-                </Button>
-              </div>
+              <Button variant="outline" onClick={handleClearFilters} size="sm">
+                Clear
+              </Button>
+              <Button onClick={handleApplyFilters} size="sm" className="btn-glow">
+                <Filter className="h-4 w-4 mr-1" />
+                Apply
+              </Button>
             </div>
           </div>
         </div>

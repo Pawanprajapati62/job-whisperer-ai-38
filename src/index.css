@@ -2,41 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* WorkWarden Design System - Modern Job Platform */
 
 @layer base {
   :root {
+    /* Light Theme - Clean & Professional */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 220 13% 18%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 13% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 13% 18%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Brand Colors - Professional Blue */
+    --primary: 210 100% 56%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 210 100% 50%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 17% 96%;
+    --secondary-foreground: 220 13% 18%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 17% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 210 17% 96%;
+    --accent-foreground: 220 13% 18%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 210 100% 56%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* WorkWarden Specific Colors */
+    --brand-blue: 210 100% 56%;
+    --brand-blue-light: 210 100% 65%;
+    --brand-blue-dark: 210 100% 45%;
+    
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    
+    --info: 199 89% 48%;
+    --info-foreground: 0 0% 100%;
+
+    /* Dashboard Dark Colors */
+    --dashboard-bg: 220 26% 8%;
+    --dashboard-card: 220 20% 12%;
+    --dashboard-foreground: 210 20% 90%;
+    --dashboard-muted: 220 15% 65%;
+    --dashboard-border: 220 20% 18%;
 
     --sidebar-background: 0 0% 98%;
 
@@ -92,6 +114,16 @@ All colors MUST be HSL.
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  /* Dashboard Theme Class */
+  .dashboard-theme {
+    --background: var(--dashboard-bg);
+    --card: var(--dashboard-card);
+    --card-foreground: var(--dashboard-foreground);
+    --foreground: var(--dashboard-foreground);
+    --muted-foreground: var(--dashboard-muted);
+    --border: var(--dashboard-border);
+  }
 }
 
 @layer base {
@@ -100,6 +132,28 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  /* Job Card Animations */
+  .job-card {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  /* Button Glow Effect */
+  .btn-glow {
+    @apply shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-shadow duration-300;
+  }
+  
+  /* Kanban Card Animations */
+  .kanban-card {
+    @apply transition-all duration-200 hover:shadow-md cursor-grab active:cursor-grabbing;
+  }
+  
+  /* Smooth Scroll */
+  .smooth-scroll {
+    scroll-behavior: smooth;
   }
 }

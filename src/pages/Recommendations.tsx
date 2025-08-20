@@ -112,7 +112,7 @@ const Recommendations = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="clean-container">
       <Navigation isAuthenticated={true} />
       
       <main className="container mx-auto px-4 py-8">
@@ -229,7 +229,7 @@ const Recommendations = () => {
                 <div className="space-y-2">
                   <Button 
                     onClick={handleGenerateRecommendations}
-                    className="w-full btn-glow"
+                    className="w-full btn-modern"
                   >
                     <Sparkles className="h-4 w-4 mr-2" />
                     Generate Recommendations

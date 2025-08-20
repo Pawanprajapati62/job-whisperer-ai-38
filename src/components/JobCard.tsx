@@ -27,36 +27,41 @@ const JobCard = ({
   onApply
 }: JobCardProps) => {
   return (
-    <Card className="job-card group h-full flex flex-col">
-      <CardHeader className="pb-3">
+    <div className="job-card group">
+      <div className="space-y-4">
         {isRecommended && (
-          <Badge variant="secondary" className="w-fit mb-2 bg-primary/10 text-primary border-primary/20">
+          <Badge className="bg-primary text-primary-foreground">
             Recommended for You
           </Badge>
         )}
-        <CardTitle className="text-lg font-semibold line-clamp-2 group-hover:text-primary transition-colors">
-          {title}
-        </CardTitle>
-        <CardDescription className="flex items-center text-muted-foreground">
-          <Building className="h-4 w-4 mr-1" />
-          {company}
-          <span className="mx-2">•</span>
-          <MapPin className="h-4 w-4 mr-1" />
-          {location}
-        </CardDescription>
-      </CardHeader>
-      
-      <CardContent className="flex-1 pb-3">
-        <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
+        
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+            {title}
+          </h3>
+          
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-1">
+              <Building className="h-4 w-4" />
+              <span>{company}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <MapPin className="h-4 w-4" />
+              <span>{location}</span>
+            </div>
+          </div>
+        </div>
+        
+        <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
           {description}
         </p>
         
-        <div className="flex flex-wrap gap-2 mb-3">
-          <Badge variant="outline" className="text-xs">
+        <div className="flex flex-wrap gap-2">
+          <Badge variant="secondary" className="text-xs bg-muted">
             {type}
           </Badge>
           {salary && (
-            <Badge variant="outline" className="text-xs">
+            <Badge variant="secondary" className="text-xs bg-accent">
               <DollarSign className="h-3 w-3 mr-1" />
               {salary}
             </Badge>
@@ -64,23 +69,20 @@ const JobCard = ({
         </div>
         
         {postedDate && (
-          <div className="flex items-center text-xs text-muted-foreground">
-            <Clock className="h-3 w-3 mr-1" />
-            Posted: {postedDate}
+          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <Clock className="h-3 w-3" />
+            <span>Posted: {postedDate}</span>
           </div>
         )}
-      </CardContent>
-      
-      <CardFooter className="pt-0">
+        
         <Button 
           onClick={onApply}
-          className="w-full btn-glow group-hover:shadow-lg transition-all duration-300"
-          size="sm"
+          className="w-full btn-modern"
         >
-          Apply Now
+          Apply now
         </Button>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 };
 

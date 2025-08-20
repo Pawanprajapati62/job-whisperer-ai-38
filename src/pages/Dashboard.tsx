@@ -55,7 +55,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="clean-container">
       <Navigation isAuthenticated={true} isDashboard={true} />
       
       <main className="container mx-auto px-4 py-8">

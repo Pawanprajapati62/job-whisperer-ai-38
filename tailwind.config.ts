@@ -65,9 +65,9 @@ export default {
 				},
 				// WorkWarden Brand Colors
 				brand: {
-					blue: 'hsl(var(--brand-blue))',
-					'blue-light': 'hsl(var(--brand-blue-light))',
-					'blue-dark': 'hsl(var(--brand-blue-dark))'
+					teal: 'hsl(var(--brand-teal))',
+					'teal-light': 'hsl(var(--brand-teal-light))',
+					'teal-dark': 'hsl(var(--brand-teal-dark))'
 				},
 				success: {
 					DEFAULT: 'hsl(var(--success))',

@@ -46,7 +46,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="clean-container">
       <Navigation isAuthenticated={true} />
       
       <main className="container mx-auto px-4 py-8 max-w-4xl">
@@ -237,7 +237,7 @@ const Profile = () => {
 
         {/* Save Changes Button */}
         <div className="mt-8 flex justify-end">
-          <Button onClick={handleSaveChanges} className="btn-glow">
+          <Button onClick={handleSaveChanges} className="btn-modern">
             <Save className="h-4 w-4 mr-2" />
             Save Changes
           </Button>

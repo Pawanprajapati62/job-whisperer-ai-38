@@ -28,18 +28,17 @@ const KanbanCard = ({ title, company, status, date, isDraggable = true }: Kanban
   };
 
   return (
-    <Card className={`kanban-card mb-3 ${isDraggable ? 'cursor-grab' : ''}`}>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-sm font-medium line-clamp-2">
+    <div className={`kanban-card p-4 ${isDraggable ? 'cursor-grab' : ''}`}>
+      <div className="space-y-3">
+        <h4 className="text-sm font-medium line-clamp-2 text-foreground">
           {title}
-        </CardTitle>
+        </h4>
+        
         <div className="flex items-center text-xs text-muted-foreground">
           <Building className="h-3 w-3 mr-1" />
           {company}
         </div>
-      </CardHeader>
-      
-      <CardContent className="pt-0">
+        
         <div className="space-y-2">
           <Badge variant="outline" className={`text-xs ${getStatusColor(status)}`}>
             {status}
@@ -52,8 +51,8 @@ const KanbanCard = ({ title, company, status, date, isDraggable = true }: Kanban
             </div>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

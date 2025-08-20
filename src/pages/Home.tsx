@@ -111,21 +111,26 @@ const Home = () => {
   const currencySymbol = selectedCountryData ? getCurrencySymbol(selectedCountryData.currency) : "$";
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="clean-container">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="py-12 px-4 bg-gradient-to-br from-primary/5 to-secondary">
-        <div className="container mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-8">
-            Find Your Dream Job
-          </h1>
+      <section className="py-12 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Find Your Dream Job
+            </h1>
+            <p className="text-muted-foreground text-lg">
+              Discover opportunities that match your skills and ambitions
+            </p>
+          </div>
           
           {/* Search and Filter Bar */}
-          <div className="max-w-6xl mx-auto bg-card rounded-lg shadow-lg p-6">
+          <div className="search-bar max-w-6xl mx-auto p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-4">
               <Select value={jobType} onValueChange={setJobType}>
-                <SelectTrigger>
+                <SelectTrigger className="border-border">
                   <SelectValue placeholder="Job Type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -137,7 +142,7 @@ const Home = () => {
               </Select>
               
               <Select value={salaryRange} onValueChange={setSalaryRange}>
-                <SelectTrigger>
+                <SelectTrigger className="border-border">
                   <SelectValue placeholder="Salary Range" />
                 </SelectTrigger>
                 <SelectContent>
@@ -150,7 +155,7 @@ const Home = () => {
               </Select>
               
               <Select value={country} onValueChange={(value) => { setCountry(value); setState(""); }}>
-                <SelectTrigger>
+                <SelectTrigger className="border-border">
                   <SelectValue placeholder="Country" />
                 </SelectTrigger>
                 <SelectContent>
@@ -163,7 +168,7 @@ const Home = () => {
               </Select>
 
               <Select value={state} onValueChange={setState} disabled={!country || !selectedCountryData?.states}>
-                <SelectTrigger>
+                <SelectTrigger className="border-border">
                   <SelectValue placeholder={country ? "State/Region" : "Select country first"} />
                 </SelectTrigger>
                 <SelectContent>
@@ -175,12 +180,11 @@ const Home = () => {
                 </SelectContent>
               </Select>
               
-              <Button variant="outline" onClick={handleClearFilters} size="sm">
+              <Button variant="outline" onClick={handleClearFilters} size="sm" className="border-border">
                 Clear
               </Button>
-              <Button onClick={handleApplyFilters} size="sm" className="btn-glow">
-                <Filter className="h-4 w-4 mr-1" />
-                Apply
+              <Button onClick={handleApplyFilters} size="sm" className="btn-modern">
+                Apply now
               </Button>
             </div>
           </div>
@@ -190,9 +194,11 @@ const Home = () => {
       {/* Job Listings Section */}
       <section className="py-12 px-4">
         <div className="container mx-auto">
-          <h2 className="text-2xl font-bold text-foreground mb-8">Recent Job Openings</h2>
+          <h2 className="text-2xl font-semibold text-foreground mb-8">
+            Recent Job Openings
+          </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {jobListings.map((job) => (
               <JobCard
                 key={job.id}
@@ -211,21 +217,19 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border py-8 px-4 bg-muted/30">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex space-x-6 mb-4 md:mb-0">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                About
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                Contact
-              </a>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Made with ❤️ by WorkWarden
-            </p>
+      <footer className="bg-card border-t border-border py-12 px-4 mt-16">
+        <div className="container mx-auto text-center">
+          <div className="flex justify-center gap-8 mb-6">
+            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              About
+            </a>
+            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              Contact
+            </a>
           </div>
+          <p className="text-muted-foreground text-sm">
+            © 2024 WorkWarden. All rights reserved.
+          </p>
         </div>
       </footer>
     </div>

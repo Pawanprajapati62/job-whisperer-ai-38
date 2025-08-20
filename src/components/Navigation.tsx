@@ -1,8 +1,10 @@
-import { Search, LogIn, UserPlus, LogOut, User, Sun, Moon } from "lucide-react";
+import { Search, LogIn, UserPlus, LogOut, User, Sun, Moon, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "@/components/theme-provider";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useState } from "react";
 
 interface NavigationProps {
   isAuthenticated?: boolean;
@@ -12,6 +14,7 @@ interface NavigationProps {
 const Navigation = ({ isAuthenticated = false, isDashboard = false }: NavigationProps) => {
   const location = useLocation();
   const { theme, setTheme } = useTheme();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -49,7 +52,7 @@ const Navigation = ({ isAuthenticated = false, isDashboard = false }: Navigation
             ))}
           </nav>
 
-          {/* Right side - Search, Theme Toggle, and Auth */}
+          {/* Right side - Search, Theme Toggle, Mobile Menu, and Auth */}
           <div className="flex items-center space-x-3">
             {/* Search Bar */}
             {!isDashboard && (
@@ -77,9 +80,84 @@ const Navigation = ({ isAuthenticated = false, isDashboard = false }: Navigation
               <span className="sr-only">Toggle theme</span>
             </Button>
 
-            {/* Authentication Buttons */}
+            {/* Mobile Menu */}
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="md:hidden w-9 h-9 rounded-xl">
+                  <Menu className="h-4 w-4" />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-80">
+                <div className="flex flex-col space-y-6">
+                  {/* Navigation Links */}
+                  <nav className="flex flex-col space-y-4">
+                    <h2 className="text-lg font-semibold text-foreground mb-4">Navigation</h2>
+                    {navItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`text-base font-medium py-2 px-3 rounded-lg transition-colors ${
+                          location.pathname === item.href 
+                            ? 'text-primary bg-primary/10' 
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                        }`}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </nav>
+
+                  {/* Search Bar for Mobile */}
+                  {!isDashboard && (
+                    <div className="space-y-2">
+                      <h3 className="text-sm font-medium text-foreground">Search</h3>
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                        <Input
+                          type="text"
+                          placeholder="Search jobs..."
+                          className="pl-10 bg-background border-border rounded-xl"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Authentication Buttons */}
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-medium text-foreground">Account</h3>
+                    {isAuthenticated ? (
+                      <div className="flex flex-col space-y-2">
+                        <Button variant="ghost" className="justify-start rounded-xl">
+                          <User className="h-4 w-4 mr-2" />
+                          Profile
+                        </Button>
+                        <Button variant="outline" className="justify-start rounded-xl">
+                          <LogOut className="h-4 w-4 mr-2" />
+                          Logout
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col space-y-2">
+                        <Button variant="ghost" className="justify-start rounded-xl">
+                          <LogIn className="h-4 w-4 mr-2" />
+                          Login
+                        </Button>
+                        <Button className="btn-modern justify-start rounded-xl">
+                          <UserPlus className="h-4 w-4 mr-2" />
+                          Sign Up
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+
+            {/* Authentication Buttons - Desktop Only */}
             {isAuthenticated ? (
-              <div className="flex items-center space-x-2">
+              <div className="hidden md:flex items-center space-x-2">
                 <Button variant="ghost" size="sm" className="rounded-xl">
                   <User className="h-4 w-4 mr-2" />
                   Profile
@@ -90,7 +168,7 @@ const Navigation = ({ isAuthenticated = false, isDashboard = false }: Navigation
                 </Button>
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
+              <div className="hidden md:flex items-center space-x-2">
                 <Button variant="ghost" size="sm" className="rounded-xl">
                   <LogIn className="h-4 w-4 mr-2" />
                   Login
